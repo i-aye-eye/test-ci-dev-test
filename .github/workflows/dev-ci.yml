@@ -1,0 +1,17 @@
+name: Dev CI
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dev:
+    uses: PaulJWright/test-ci/.github/workflows/gh200.yml@v0
+    with:
+      profile: dev-cpu
+      script: ci/dev.sh
+      args: ${{ vars.TEST_CI_SLEEP || '0' }}
+      dispatch: ${{ vars.TEST_CI_DISPATCH || 'manual' }}
+    secrets:
+      origin-token: ${{ secrets.BRICS_CI_ORIGIN_TOKEN }}
+      runner-admin-pat: ${{ secrets.RUNNER_ADMIN_PAT }}
